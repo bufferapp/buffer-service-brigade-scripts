@@ -1,0 +1,25 @@
+{
+  "name": "@bufferapp/buffer-service-brigade-scripts",
+  "version": "0.0.1-beta-01",
+  "description": "Buffer Service Brigade Scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bufferapp/buffer-service-brigade-scripts.git"
+  },
+  "keywords": [
+    "brigade"
+  ],
+  "author": "hharnisc@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bufferapp/buffer-service-brigade-scripts/issues"
+  },
+  "homepage": "https://github.com/bufferapp/buffer-service-brigade-scripts#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
