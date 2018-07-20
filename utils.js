@@ -98,10 +98,25 @@ const generateHelmCommand = ({
     dryRun ? ' --debug --dry-run' : ''
   }`
 
+const formatEnvVars = ({ project, envVars }) => envVars.map(envVar => {
+  if (!envVar.name && (envVar.projectSecret || envVar.value)) {
+    throw new Error('A name and projectSecret or value must be specified in the envVar parameter')
+  }
+  if (envVar.projectSecret && project.secrets[envVar.projectSecret] === undefined) {
+    throw new Error(
+      `An undefined projectSecret envVar has been specified ${envVar.name} - ${envVar.projectSecret}`)
+  }
+  return {
+    name: envVar.name,
+    value: envVar.projectSecret ? project.secrets[envVar.projectSecret] : envVar.value,
+  }
+})
+
 module.exports = {
   getGitPRAction,
   appName,
   releaseName,
   echoedTasks,
   generateHelmCommand,
+  formatEnvVars,
 }

@@ -6,10 +6,11 @@ const DEFAULT_CHARTMUSEUM_URL = 'http://chartmuseum-chartmuseum.default'
 const DEFAULT_VALUES_PATH = 'values.yaml'
 const DEFAULT_HELM_CHART = 'buffer-service'
 
-module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart }) => {
+module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart, envVars }) => {
   const chartmuseumUrlValue = chartmuseumUrl || DEFAULT_CHARTMUSEUM_URL
   const valuesPathValue = valuesPath || DEFAULT_VALUES_PATH
   const helmChartValue = helmChart || DEFAULT_HELM_CHART
+  const envVarsValue = envVars || []
   const { events } = brigade
   events.on('deploy', async (event, project) => {
     await deploy({
@@ -19,6 +20,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart }) => {
       chartmuseumUrl: chartmuseumUrlValue,
       valuesPath: valuesPathValue,
       helmChart: helmChartValue,
+      envVars: envVarsValue,
     })
   })
 
@@ -31,6 +33,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart }) => {
       chartmuseumUrl: chartmuseumUrlValue,
       valuesPath: valuesPathValue,
       helmChart: helmChartValue,
+      envVars: envVarsValue,
     })
   })
 
@@ -43,6 +46,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart }) => {
       chartmuseumUrl: chartmuseumUrlValue,
       valuesPath: valuesPathValue,
       helmChart: helmChartValue,
+      envVars: envVarsValue,
     })
   })
 

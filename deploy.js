@@ -2,28 +2,20 @@ const { githubStatusJob } = require('./githubStatusJob')
 const { yamlToJsonJob } = require('./yamlToJsonJob')
 const { dockerBuildJob } = require('./dockerBuildJob')
 const { helmDeployerJob } = require('./helmDeployerJob')
-const { releaseName, appName, generateHostOverride } = require('./utils')
+const { releaseName, appName, generateHostOverride, formatEnvVars } = require('./utils')
 
-const deploy = async ({ brigade, event, project, dryRunOnly, devDeploy, chartmuseumUrl, valuesPath, helmChart }) => {
+const deploy = async ({ brigade, event, project, dryRunOnly, devDeploy, chartmuseumUrl, valuesPath, helmChart, envVars }) => {
   const target = `https://kashti.buffer.com/#!/build/${event.buildID}`
-  const envVars = [
-    {
-      name: 'MONGO_URL',
-      value: project.secrets.MONGO_URL,
-    },
-    {
-      name: 'MONGO_DATABASE',
-      value: project.secrets.MONGO_DATABASE,
-    },
-    {
-      name: 'BUGSNAG_KEY',
-      value: project.secrets.BUGSNAG_KEY,
-    },
-    {
-      name: 'RELEASE_TRACK',
-      value: devDeploy ? 'dev' : 'stable',
-    },
-  ]
+  const envVarsValue = formatEnvVars({
+    project,
+    envVars: [
+      {
+        name: 'RELEASE_TRACK',
+        value: devDeploy ? 'dev' : 'stable',
+      },
+      ...envVars,
+    ]
+  })
   await githubStatusJob({
     brigade,
     event,
@@ -53,7 +45,7 @@ const deploy = async ({ brigade, event, project, dryRunOnly, devDeploy, chartmus
       valuesPath,
       helmChart,
       values,
-      envVars,
+      envVars: envVarsValue,
       dryRunOnly,
       devDeploy,
     })
