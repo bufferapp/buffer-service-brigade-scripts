@@ -99,7 +99,7 @@ const generateHelmCommand = ({
   }`
 
 const formatEnvVars = ({ project, envVars }) => envVars.map(envVar => {
-  if (!envVar.name && (envVar.projectSecret || envVar.value)) {
+  if (!envVar.name || !(envVar.projectSecret || envVar.value)) {
     throw new Error('A name and projectSecret or value must be specified in the envVar parameter')
   }
   if (envVar.projectSecret && project.secrets[envVar.projectSecret] === undefined) {
