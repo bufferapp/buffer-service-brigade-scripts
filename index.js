@@ -4,10 +4,12 @@ const { getGitPRAction } = require('./utils')
 
 const DEFAULT_CHARTMUSEUM_URL = 'http://chartmuseum-chartmuseum.default'
 const DEFAULT_VALUES_PATH = 'values.yaml'
+const DEFAULT_HELM_CHART = 'buffer-service'
 
-module.exports = ({ brigade, chartmuseumUrl, valuesPath }) => {
+module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart }) => {
   const chartmuseumUrlValue = chartmuseumUrl || DEFAULT_CHARTMUSEUM_URL
   const valuesPathValue = valuesPath || DEFAULT_VALUES_PATH
+  const helmChartValue = helmChart || DEFAULT_HELM_CHART
   const { events } = brigade
   events.on('deploy', async (event, project) => {
     await deploy({
@@ -16,6 +18,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath }) => {
       project,
       chartmuseumUrl: chartmuseumUrlValue,
       valuesPath: valuesPathValue,
+      helmChart: helmChartValue,
     })
   })
 
@@ -27,6 +30,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath }) => {
       dryRunOnly: true,
       chartmuseumUrl: chartmuseumUrlValue,
       valuesPath: valuesPathValue,
+      helmChart: helmChartValue,
     })
   })
 
@@ -38,6 +42,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath }) => {
       devDeploy: true,
       chartmuseumUrl: chartmuseumUrlValue,
       valuesPath: valuesPathValue,
+      helmChart: helmChartValue,
     })
   })
 
