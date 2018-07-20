@@ -4,9 +4,8 @@ const { dockerBuildJob } = require('./dockerBuildJob')
 const { helmDeployerJob } = require('./helmDeployerJob')
 const { releaseName, appName, generateHostOverride } = require('./utils')
 
-const deploy = async ({ brigade, event, project, dryRunOnly, devDeploy }) => {
+const deploy = async ({ brigade, event, project, dryRunOnly, devDeploy, chartmuseumUrl }) => {
   const valuesPath = 'values.yaml'
-  const chartmuseumUrl = 'http://chartmuseum-chartmuseum.default'
   const helmChart = 'buffer-service'
   const target = `https://kashti.buffer.com/#!/build/${event.buildID}`
   const envVars = [

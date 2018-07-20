@@ -2,15 +2,17 @@ const { deploy } = require('./deploy')
 const { destroyDev } = require('./destroyDev')
 const { getGitPRAction } = require('./utils')
 
-module.exports = ({ brigade }) => {
-  console.log('brigade', brigade)
-  console.log('Object.keys(brigade)', Object.keys(brigade));
+const DEFAULT_CHARTMUSEUM_URL = 'http://chartmuseum-chartmuseum.default'
+
+module.exports = ({ brigade, chartmuseumUrl }) => {
+  const chartmuseumUrlValue = chartmuseumUrl || DEFAULT_CHARTMUSEUM_URL
   const { events } = brigade
   events.on('deploy', async (event, project) => {
     await deploy({
       brigade,
       event,
       project,
+      chartmuseumUrl: chartmuseumUrlValue,
     })
   })
 
@@ -20,6 +22,7 @@ module.exports = ({ brigade }) => {
       event,
       project,
       dryRunOnly: true,
+      chartmuseumUrl: chartmuseumUrlValue,
     })
   })
 
@@ -29,6 +32,7 @@ module.exports = ({ brigade }) => {
       event,
       project,
       devDeploy: true,
+      chartmuseumUrl: chartmuseumUrlValue,
     })
   })
 
@@ -37,6 +41,7 @@ module.exports = ({ brigade }) => {
       brigade,
       event,
       project,
+      chartmuseumUrl: chartmuseumUrlValue,
     })
   })
 
