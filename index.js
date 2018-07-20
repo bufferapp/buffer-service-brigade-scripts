@@ -3,9 +3,11 @@ const { destroyDev } = require('./destroyDev')
 const { getGitPRAction } = require('./utils')
 
 const DEFAULT_CHARTMUSEUM_URL = 'http://chartmuseum-chartmuseum.default'
+const DEFAULT_VALUES_PATH = 'values.yaml'
 
-module.exports = ({ brigade, chartmuseumUrl }) => {
+module.exports = ({ brigade, chartmuseumUrl, valuesPath }) => {
   const chartmuseumUrlValue = chartmuseumUrl || DEFAULT_CHARTMUSEUM_URL
+  const valuesPathValue = valuesPath || DEFAULT_VALUES_PATH
   const { events } = brigade
   events.on('deploy', async (event, project) => {
     await deploy({
@@ -13,6 +15,7 @@ module.exports = ({ brigade, chartmuseumUrl }) => {
       event,
       project,
       chartmuseumUrl: chartmuseumUrlValue,
+      valuesPath: valuesPathValue,
     })
   })
 
@@ -23,6 +26,7 @@ module.exports = ({ brigade, chartmuseumUrl }) => {
       project,
       dryRunOnly: true,
       chartmuseumUrl: chartmuseumUrlValue,
+      valuesPath: valuesPathValue,
     })
   })
 
@@ -33,6 +37,7 @@ module.exports = ({ brigade, chartmuseumUrl }) => {
       project,
       devDeploy: true,
       chartmuseumUrl: chartmuseumUrlValue,
+      valuesPath: valuesPathValue,
     })
   })
 
@@ -42,6 +47,7 @@ module.exports = ({ brigade, chartmuseumUrl }) => {
       event,
       project,
       chartmuseumUrl: chartmuseumUrlValue,
+      valuesPath: valuesPathValue,
     })
   })
 

@@ -3,9 +3,8 @@ const { yamlToJsonJob } = require('./yamlToJsonJob')
 const { helmDestroyerJob } = require('./helmDestroyerJob')
 const { releaseName } = require('./utils')
 
-const destroyDev = async ({ brigade, event, project, chartmuseumUrl }) => {
+const destroyDev = async ({ brigade, event, project, chartmuseumUrl, valuesPath }) => {
   const target = `https://kashti.buffer.com/#!/build/${event.buildID}`
-  const valuesPath = 'values.yaml'
 
   await githubStatusJob({
     brigade,
