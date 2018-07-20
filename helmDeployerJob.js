@@ -1,7 +1,7 @@
-const { Job } = require('brigadier')
 const { echoedTasks, generateHelmCommand } = require('./utils')
 
 const helmDeployerJob = async ({
+  brigade,
   event,
   releaseName,
   appName,
@@ -14,6 +14,7 @@ const helmDeployerJob = async ({
   dryRunOnly,
   devDeploy,
 }) => {
+  const { Job } = brigade
   const helmDeployer = new Job('helm-deployer', 'linkyard/docker-helm:2.8.2')
   const tasks = [
     'cd /src',

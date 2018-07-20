@@ -4,7 +4,7 @@ const { dockerBuildJob } = require('./dockerBuildJob')
 const { helmDeployerJob } = require('./helmDeployerJob')
 const { releaseName, appName, generateHostOverride } = require('./utils')
 
-const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
+const deploy = async ({ brigade, event, project, dryRunOnly, devDeploy }) => {
   const valuesPath = 'values.yaml'
   const chartmuseumUrl = 'http://chartmuseum-chartmuseum.default'
   const helmChart = 'buffer-service'
@@ -28,6 +28,7 @@ const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
     },
   ]
   await githubStatusJob({
+    brigade,
     event,
     project,
     state: 'pending',
@@ -36,6 +37,7 @@ const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
   })
   try {
     const values = await yamlToJsonJob({
+      brigade,
       valuesPath,
     })
     const {
@@ -43,8 +45,9 @@ const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
       namespace,
       image: { repository: appDockerImage },
     } = values
-    await dockerBuildJob({ event, project, appDockerImage })
+    await dockerBuildJob({ brigade, event, project, appDockerImage })
     await helmDeployerJob({
+      brigade,
       event,
       releaseName: releaseName({ event, name }),
       appName: appName({ event, name }),
@@ -58,6 +61,7 @@ const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
       devDeploy,
     })
     await githubStatusJob({
+      brigade,
       event,
       project,
       state: 'success',
@@ -71,6 +75,7 @@ const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
       values.ingress.host
     ) {
       await githubStatusJob({
+        brigade,
         event,
         project,
         state: 'success',
@@ -84,6 +89,7 @@ const deploy = async ({ event, project, dryRunOnly, devDeploy }) => {
     console.log('error.message', error.message)
     console.log('error.stack', error.stack)
     await githubStatusJob({
+      brigade,
       event,
       project,
       state: 'failure',

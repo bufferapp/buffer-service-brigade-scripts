@@ -1,9 +1,8 @@
-const { Job } = require('brigadier')
-
 let id = 0
 const generateGithubStatusId = () => id++
 
 const githubStatusJob = async ({
+  brigade,
   event,
   project,
   state,
@@ -11,6 +10,7 @@ const githubStatusJob = async ({
   target,
   context,
 }) => {
+  const { Job } = brigade
   const githubStatus = new Job(
     `set-github-build-status-${generateGithubStatusId()}`,
     'technosophos/github-notify:latest',

@@ -1,7 +1,7 @@
-const { Job } = require('brigadier')
 const { echoedTasks } = require('./utils')
 
-const dockerBuildJob = async ({ event, project, appDockerImage }) => {
+const dockerBuildJob = async ({ brigade, event, project, appDockerImage }) => {
+  const { Job } = brigade
   const dockerBuilder = new Job('docker-builder', 'docker:stable-dind')
   dockerBuilder.privileged = true
   dockerBuilder.env = {
