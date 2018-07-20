@@ -1,6 +1,6 @@
 {
   "name": "@bufferapp/buffer-service-brigade-scripts",
-  "version": "0.0.1-beta-05",
+  "version": "0.0.1-beta-06",
   "description": "Buffer Service Brigade Scripts",
   "main": "index.js",
   "scripts": {
