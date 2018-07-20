@@ -123,6 +123,7 @@ const devDeployNamespace = ({ devDeploys, branch }) =>
     if (namespace) {
       return namespace
     } else if (devDeploy.branch.test(branch)) {
+      console.log(`branch ${branch} matched ${devDeploy.branch.toString()}, working on namespace ${namespace}`)
       return devDeploy.namespace
     }
   }, undefined)
