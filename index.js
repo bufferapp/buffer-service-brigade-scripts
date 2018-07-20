@@ -1,6 +1,6 @@
 const { deploy } = require('./deploy')
 const { destroyDev } = require('./destroyDev')
-const { getGitPRAction, getGitBranch, getDeployNamespace } = require('./utils')
+const { getGitPRAction, getGitBranch, devDeployNamespace } = require('./utils')
 
 const DEFAULT_CHARTMUSEUM_URL = 'http://chartmuseum-chartmuseum.default'
 const DEFAULT_VALUES_PATH = 'values.yaml'
