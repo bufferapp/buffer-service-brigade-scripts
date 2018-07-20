@@ -112,11 +112,28 @@ const formatEnvVars = ({ project, envVars }) => envVars.map(envVar => {
   }
 })
 
+// devDeploys: [
+//   {
+//     branch: /^*?/,
+//     namespace: 'dev',
+//   },
+// ],
+const devDeployNamespace = ({ devDeploys, branch }) =>
+  devDeploys.reduce((namespace, branch) => {
+    if (namespace) {
+      return namespace
+    } else if (devDeploy.branch.test(branch)) {
+      return devDeploy.namespace
+    }
+  }, undefined)
+
 module.exports = {
   getGitPRAction,
+  getGitBranch,
   appName,
   releaseName,
   echoedTasks,
   generateHelmCommand,
   formatEnvVars,
+  devDeployNamespace,
 }
