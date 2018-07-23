@@ -11,9 +11,12 @@ const dockerBuildJob = async ({ brigade, event, project, appDockerImage }) => {
     'dockerd-entrypoint.sh &',
     'sleep 20',
     'cd /src',
-    `docker login -u ${project.secrets.DOCKER_USER} -p '${
-      project.secrets.DOCKER_PASS
-    }' ${project.secrets.DOCKER_REGISTRY}`,
+    {
+      task: `docker login -u ${project.secrets.DOCKER_USER} -p '${
+        project.secrets.DOCKER_PASS
+      }' ${project.secrets.DOCKER_REGISTRY}`,
+      redactedTask: `docker login -u XXXredactedXXX -p 'XXXredactedXXX' ${project.secrets.DOCKER_REGISTRY}`
+    },
     `docker build -t ${appDockerImage}:${event.revision.commit} .`,
     `docker push ${appDockerImage}:${event.revision.commit}`,
   ])

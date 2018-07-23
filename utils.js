@@ -42,8 +42,8 @@ const appName = ({ event, name }) => {
 const echoedTasks = tasks => {
   const echoTasks = []
   tasks.forEach(task => {
-    echoTasks.push(`echo "Doing Task: '${task}'"`)
-    echoTasks.push(task)
+    echoTasks.push(`echo "Doing Task: '${task.redactedTask || task}'"`)
+    echoTasks.push(task.task || task)
   })
   return echoTasks
 }
