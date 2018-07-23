@@ -119,11 +119,11 @@ const formatEnvVars = ({ project, envVars }) => envVars.map(envVar => {
 //   },
 // ],
 const devDeployNamespace = ({ devDeploys, branch }) =>
-  devDeploys.reduce((namespace, branch) => {
+  devDeploys.reduce((namespace, devDeploy) => {
     if (namespace) {
       return namespace
     } else if (devDeploy.branch.test(branch)) {
-      console.log(`branch ${branch} matched ${devDeploy.branch.toString()}, working on namespace ${namespace}`)
+      console.log(`branch ${branch} matched ${devDeploy.branch.toString()}, working on namespace ${devDeploy.namespace}`)
       return devDeploy.namespace
     }
   }, undefined)

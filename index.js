@@ -6,7 +6,15 @@ const DEFAULT_CHARTMUSEUM_URL = 'http://chartmuseum-chartmuseum.default'
 const DEFAULT_VALUES_PATH = 'values.yaml'
 const DEFAULT_HELM_CHART = 'buffer-service'
 
-module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart, envVars, devDeploys, deployDryRun }) => {
+module.exports = ({
+  brigade,
+  chartmuseumUrl,
+  valuesPath,
+  helmChart,
+  envVars,
+  devDeploys,
+  deployDryRun,
+}) => {
   const chartmuseumUrlValue = chartmuseumUrl || DEFAULT_CHARTMUSEUM_URL
   const valuesPathValue = valuesPath || DEFAULT_VALUES_PATH
   const helmChartValue = helmChart || DEFAULT_HELM_CHART
@@ -62,7 +70,7 @@ module.exports = ({ brigade, chartmuseumUrl, valuesPath, helmChart, envVars, dev
   events.on('destroy-dev', async (event, project) => {
     const namespace = devDeployNamespace({
       branch: getGitBranch({ event }),
-      devDeploys: devDeploysValue ,
+      devDeploys: devDeploysValue,
     })
     if (namespace) {
       await destroyDev({
