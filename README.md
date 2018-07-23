@@ -2,6 +2,42 @@
 
 NPM Package for brigade scripts
 
+## Table Of Contents
+
+- [Quickstart](#quickstart)
+- [Example Configuration](#example-configuration)
+
+## Quickstart
+
+### Create A Brigade Project
+
+A brigade project uses a secret to be used as configuration, sensitive information can be stored in the file that can be used during the deployment phase -- things like ENV vars with keys.
+
+Create an example brigade secret file (lets call in my-app-secrets.yaml): https://github.com/Azure/brigade/blob/master/docs/topics/github.md#configuring-your-project
+
+
+Deploy the brigade project with helm
+
+```sh
+helm upgrade --install my-app-secrets brigade/brigade-project -f my-app-secrets.yaml --namespace brigade
+```
+
+### Hook Up The Webhook on github
+
+Follow these instructions on the repo you'd like to deploy with `https://brigade-gateway.buffer.com/events/github` as YOUR_HOSTNAME:
+
+https://github.com/Azure/brigade/blob/master/docs/topics/github.md#configuring-github
+
+### Configure The Repo
+
+There are usually three parts to this
+
+- values.yaml [example](https://github.com/bufferapp/helm-chart-base-templates/blob/master/buffer-service/values.yaml)
+- brigade.js [example](https://github.com/bufferapp/core-authentication-service/blob/master/brigade.js)
+- brigade.json [example](https://github.com/bufferapp/core-authentication-service/blob/master/brigade.json)
+
+A full list of configuration options for this package can be found in the [Example Configuration](#example-configuration) section.
+
 ## Example Configuration
 
 ### brigade.js
