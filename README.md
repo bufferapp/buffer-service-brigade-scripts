@@ -10,9 +10,9 @@ This script gets called that triggers deployments
 
 ```js
 const brigade = require('brigadier')
-const scripts = require('@bufferapp/buffer-service-brigade-scripts')
+const brigadeScripts = require('@bufferapp/buffer-service-brigade-scripts')
 
-scripts({
+brigadeScripts({
   brigade,
   chartmuseumUrl: 'http://chartmuseum-chartmuseum.default', // default
   valuesPath: 'values.yaml', // default
