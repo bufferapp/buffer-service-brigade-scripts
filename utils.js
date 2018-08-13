@@ -24,6 +24,7 @@ const getFormattedBranch = ({ event }) =>
   getGitBranch({ event })
     .replace(/\//g, '-')
     .substr(0, MAX_LABEL_LENGTH)
+    .toLocaleLowerCase()
 
 const releaseName = ({ event, name }) =>
   `${name}-${getFormattedBranch({ event })}`.substr(0, MAX_RELEASE_NAME_LENGTH)
